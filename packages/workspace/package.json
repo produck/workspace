@@ -5,6 +5,9 @@
   "author": "zhangtianyu <zhangtianyu@3dnest.cn>",
   "homepage": "https://github.com/produck/workspace#readme",
   "license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
   "main": "index.js",
   "repository": {
     "type": "git",
