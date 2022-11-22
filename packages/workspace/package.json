@@ -1,5 +1,5 @@
 {
-  "name": "workspace",
+  "name": "@produck/workspace",
   "version": "0.0.1",
   "description": "> TODO: description",
   "author": "zhangtianyu <zhangtianyu@3dnest.cn>",
@@ -17,7 +17,8 @@
   "files": [
     "index.d.ts",
     "index.mjs",
-    "index.cjs"
+    "index.cjs",
+		"tsconfig.json"
   ],
   "devDependencies": {
     "rollup": "^3.3.0"

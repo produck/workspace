@@ -4,10 +4,7 @@ import path from 'node:path';
 const DEFAULT_OPTIONS = { recursive: true };
 
 export class Workspace {
-	#root = path.resolve();
-	#map = {}
-
-	constructor() { }
+	#map = { root: path.resolve() };
 
 	async buildAll() {
 		await this.buildRoot();
@@ -18,27 +15,23 @@ export class Workspace {
 	}
 
 	async buildRoot() {
-		return fs.mkdir(this.root, DEFAULT_OPTIONS);
+		await fs.mkdir(this.root, DEFAULT_OPTIONS);
 	}
 
-	async build(name, pathname = '') {
-		return fs.mkdir(this.resolve(name, pathname), DEFAULT_OPTIONS);
+	async build(name, ...pathname) {
+		await fs.mkdir(this.resolve(name, ...pathname), DEFAULT_OPTIONS);
 	}
 
 	set root(pathname) {
-		this.#root = path.resolve(pathname);
+		this.#map.root = path.resolve(pathname);
 	}
 
 	get root() {
-		return this.#root;
+		return this.#map.root;
 	}
 
-	setPath(name, pathname, fromRoot = true) {
-		if (fromRoot) {
-			this.#map[name] = path.join(this.root, pathname);
-		} else {
-			this.#map[name] = path.resolve(pathname);
-		}
+	setPath(name, ...pathname) {
+		this.#map[name] = path.join(this.root, ...pathname);
 	}
 
 	getPath(name) {
@@ -51,7 +44,7 @@ export class Workspace {
 		return pathname;
 	}
 
-	resolve(name, pathname = '') {
-		return path.join(this.getPath(name), pathname);
+	resolve(name, ...pathname) {
+		return path.join(this.getPath(name), ...pathname);
 	}
 } 

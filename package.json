@@ -1,12 +1,13 @@
 {
-  "name": "@produck/workspace",
-  "version": "0.0.1",
+  "name": "@produck/workspace-workspace",
+  "private": true,
   "description": "",
   "scripts": {
     "deps:install": "npm install && lerna bootstrap",
     "deps:clean": "lerna clean -y"
   },
   "devDependencies": {
+    "eslint": "^8.28.0",
     "lerna": "^6.0.3"
   },
   "workspaces": [

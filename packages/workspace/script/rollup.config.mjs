@@ -1,4 +1,4 @@
-import { createRequire } from 'node:module';
+import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 
 import { defineConfig } from 'rollup';
@@ -29,6 +29,10 @@ export default moduleList.map(config => {
 			format: config.format,
 			name: config.name,
 			banner: BANNER
-		}
+		},
+		external: [
+			...builtinModules,
+			...builtinModules.map(name => `node:${name}`)
+		]
 	});
 });
