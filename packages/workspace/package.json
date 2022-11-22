@@ -1,13 +1,13 @@
 {
   "name": "@produck/workspace",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "> TODO: description",
   "author": "zhangtianyu <zhangtianyu@3dnest.cn>",
   "homepage": "https://github.com/produck/workspace#readme",
   "license": "MIT",
-	"publishConfig": {
-		"access": "public"
-	},
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "index.d.ts",
     "index.mjs",
     "index.cjs",
-		"tsconfig.json"
+    "tsconfig.json"
   ],
   "devDependencies": {
     "rollup": "^3.3.0"
