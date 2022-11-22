@@ -1,0 +1,15 @@
+{
+  "name": "@produck/workspace",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "deps:install": "npm install && lerna bootstrap",
+    "deps:clean": "lerna clean -y"
+  },
+  "devDependencies": {
+    "lerna": "^6.0.3"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

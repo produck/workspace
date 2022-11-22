@@ -1,0 +1,29 @@
+{
+  "name": "workspace",
+  "version": "0.0.1",
+  "description": "> TODO: description",
+  "author": "zhangtianyu <zhangtianyu@3dnest.cn>",
+  "homepage": "https://github.com/produck/workspace#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/produck/workspace.git"
+  },
+  "scripts": {
+    "build": "rollup -c script/rollup.config.mjs",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "index.d.ts",
+    "index.mjs",
+    "index.cjs"
+  ],
+  "devDependencies": {
+    "rollup": "^3.3.0"
+  },
+  "exports": {
+    "import": "./index.mjs",
+    "require": "./index.cjs"
+  }
+}
