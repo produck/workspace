@@ -35,21 +35,20 @@ describe('Workspace::', function () {
 			workspace.setPath('b', 'b', 'b1', 'b2');
 			await workspace.buildAll();
 
-			assert.ok([
-				workspace.getPath('a'), workspace.getPath('b')
-			]
-				.map(buildPath => {
-					return fs.existsSync(buildPath);
-				})
-				.every(item => item));
+			const path1 = workspace.getPath('a');
+			const path2 = workspace.getPath('b');
+			const flag1 = fs.existsSync(path1);
+			const flag2 = fs.existsSync(path2);
+
+			assert.ok(flag1 && flag2);
 		});
 	});
 
 	describe('setPath()', function () {
 		it('should find path prop in workspace instance', function () {
 			const workspace = new Workspace();
-			workspace.root = '.test';
 
+			workspace.root = '.test';
 			workspace.setPath('tmp', '.tmp', 'a', 'b', 'c', 'd');
 
 			const result = path.resolve('.test/.tmp/a/b/c/d');
@@ -77,9 +76,7 @@ describe('Workspace::', function () {
 			workspace.root = '.test';
 			workspace.setPath('t1', 't1');
 
-			assert.throws(() => {
-				workspace.getPath('t0');
-			}, {
+			assert.throws(() => workspace.getPath('t0'), {
 				message: 'The path named t0 is NOT existed.'
 			});
 		});
@@ -105,6 +102,7 @@ describe('Workspace::', function () {
 			const expectedPath = path.resolve('resolve', 'a/s/d/f/g');
 
 			workspace.setPath('resolve', 'resolve');
+
 			const target = workspace.resolve('resolve', 'a', 's', 'd', 'f', 'g');
 
 			assert.strictEqual(expectedPath, target);

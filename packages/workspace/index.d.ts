@@ -2,6 +2,8 @@ declare namespace Workspace {
 
 }
 
+type PathName = 'root' | string;
+
 interface Workspace {
 	/**
 	 * Current root path, an absolute path.
@@ -24,27 +26,26 @@ interface Workspace {
 	 * @param name The name of path.
 	 * @param pathname A relative path after the path specify by the name.
 	 */
-	build(name: string, pathname?: string): Promise<void>;
+	build(name: PathName, ...pathname: string[]): Promise<void>;
 
 	/**
 	 * Setting a named path. Overrides the path to a special directory or
 	 * file associated with name.
 	 * @param name The name of path.
 	 * @param pathname A relative path after the path specify by the name.
-	 * @param fromRoot If resolving path from the root or not. Default: `true`
 	 */
-	setPath(name: string, pathname: string, fromRoot?: boolean): void;
+	setPath(name: PathName, ...pathname: string[]): void;
 
 	/**
 	 * Getting a named path. On failure, an Error is thrown.
 	 * @param name The name of path.
 	 */
-	getPath(name: string);
+	getPath(name: PathName);
 
 	/**
 	 * Resolving a path by named path with a sub path.
 	 * @param name The name of path.
 	 * @param pathname A relative path after the path specify by the name.
 	 */
-	resolve(name: string, pathname: string);
+	resolve(name: PathName, ...pathname: string[]);
 }
