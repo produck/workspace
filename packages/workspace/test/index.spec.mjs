@@ -1,72 +1,65 @@
 import assert from 'node:assert';
-import fs from 'node:fs';
 import path from 'node:path';
 import { Workspace } from '../index.mjs';
+import { createRequire } from 'node:module';
+
+const require = createRequire(import.meta.url);
+const fs = require('fs-extra');
 
 describe('Workspace::', function () {
-	describe('Workspace:: new', function () {
-		it('should create a new workspace instance', function () {
-			const workspace = new Workspace();
-
-			if (!(workspace instanceof Workspace)) {
-				throw new Error('Error');
-			}
-		});
+	beforeEach(function () {
+		fs.ensureDirSync('./.test');
 	});
 
-	describe('Workspace:: buildRoot', function () {
+	afterEach(function () {
+		fs.removeSync('./.test');
+	});
+
+	describe('buildRoot()', function () {
 		it('should create root folder', async function () {
 			const workspace = new Workspace();
 
 			workspace.root = '.test';
 			await workspace.buildRoot();
 
-			const flag = fs.existsSync(workspace.root);
-
-			if (!flag) {
-				throw new Error('Built folder is NOT exist.');
-			}
-
-			deleteDir(workspace.root);
+			assert.ok(fs.existsSync(workspace.root));
 		});
 	});
 
-	describe('Workspace:: buildAll', function () {
+	describe('buildAll()', function () {
 		it('should create all folder', async function () {
 			const workspace = new Workspace();
 
-			workspace.root = '.buildAll';
+			workspace.root = '.test';
 			workspace.setPath('a', 'a', 'a1', 'a2');
 			workspace.setPath('b', 'b', 'b1', 'b2');
 			await workspace.buildAll();
 
-			[workspace.getPath('a'), workspace.getPath('b')].forEach((buildPath) => {
-				const flag = fs.existsSync(buildPath);
-
-				if (!flag) {
-					throw new Error('Built folder is NOT exist.');
-				}
-			});
-
-			deleteDir(workspace.root);
+			assert.ok([
+				workspace.getPath('a'), workspace.getPath('b')
+			]
+				.map(buildPath => {
+					return fs.existsSync(buildPath);
+				})
+				.every(item => item));
 		});
 	});
 
-	describe('Workspace:: setPath', function () {
+	describe('setPath()', function () {
 		it('should find path prop in workspace instance', function () {
 			const workspace = new Workspace();
-			workspace.root = '';
+			workspace.root = '.test';
 
 			workspace.setPath('tmp', '.tmp', 'a', 'b', 'c', 'd');
 
-			const result = path.resolve('.tmp/a/b/c/d');
+			const result = path.resolve('.test/.tmp/a/b/c/d');
 			const target = path.resolve(workspace.getPath('tmp'));
 
 			assert.strictEqual(result, target);
 		});
 	});
 
-	describe('Workspace:: getPath', function () {
+	describe('getPath()', function () {
 		it('should NOT exception', function () {
 			const workspace = new Workspace();
 
@@ -81,6 +74,7 @@ describe('Workspace::', function () {
 		it('should throw exception', function () {
 			const workspace = new Workspace();
 
+			workspace.root = '.test';
 			workspace.setPath('t1', 't1');
 
 			assert.throws(() => {
@@ -91,27 +85,21 @@ describe('Workspace::', function () {
 		});
 	});
 
-	describe('Workspace:: build', function () {
+	describe('build()', function () {
 		it('should create multi-level nested file directories', async function () {
 			const workspace = new Workspace();
 
-			workspace.root = 'temp';
-			workspace.setPath('temp1', 'a', 'b', 'c', 'd');
-			await workspace.build('temp1');
+			workspace.root = '.test';
+			workspace.setPath('temp', 'a', 'b', 'c', 'd');
+			await workspace.build('temp');
 
-			const buildPath = path.resolve('temp', 'a/b/c/d');
+			const buildPath = path.resolve('.test', 'a/b/c/d');
 
-			const flag = fs.existsSync(buildPath);
-
-			if (!flag) {
-				throw new Error('Target directory is NOT exist.');
-			}
-
-			deleteDir(workspace.root);
+			assert.ok(fs.existsSync(buildPath));
 		});
 	});
 
-	describe('Workspace:: resolve', function () {
+	describe('resolve()', function () {
 		it('should return fits the expected absolute path', function () {
 			const workspace = new Workspace();
 			const expectedPath = path.resolve('resolve', 'a/s/d/f/g');
@@ -123,24 +111,3 @@ describe('Workspace::', function () {
 		});
 	});
 });
-
-function deleteDir(targetPath) {
-	let files = [];
-
-	if (fs.existsSync(targetPath)) {
-		files = fs.readdirSync(targetPath);
-		files.forEach(file => {
-			const curPath = path.join(targetPath, file);
-
-			if (fs.statSync(curPath).isDirectory()) {
-				deleteDir(curPath);
-			} else {
-				fs.unlinkSync(curPath);
-			}
-		});
-
-		fs.rmdirSync(targetPath);
-	} else {
-		throw new Error('Target path is NOT found.');
-	}
-}
