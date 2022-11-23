@@ -5,8 +5,10 @@
   "scripts": {
     "deps:install": "npm install && lerna bootstrap",
     "deps:clean": "lerna clean -y",
+		"lint": "eslint --fix packages/**/*.mjs",
     "test": "mocha \"packages/**/*.spec.mjs\" --no-diff -t 999999999 ",
-    "coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test"
+    "coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
+		"publish": "npm run lint && npm run test && lerna publish"
   },
   "devDependencies": {
     "c8": "^7.12.0",
