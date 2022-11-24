@@ -1,6 +1,6 @@
 type PathName = 'root' | string;
 
-export class Workspace {
+declare class Workspace {
 	/**
 	 * Current root path, an absolute path.
 	 *
@@ -45,3 +45,5 @@ export class Workspace {
 	 */
 	resolve(name: PathName, ...pathname: string[]): string;
 }
+
+export default Workspace;

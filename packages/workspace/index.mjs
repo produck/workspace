@@ -3,7 +3,7 @@ import path from 'node:path';
 
 const DEFAULT_OPTIONS = { recursive: true };
 
-export class Workspace {
+class Workspace {
 	#map = { root: path.resolve() };
 
 	async buildAll() {
@@ -47,4 +47,6 @@ export class Workspace {
 	resolve(name, ...pathname) {
 		return path.join(this.getPath(name), ...pathname);
 	}
-} 
+}
+
+export default Workspace;
