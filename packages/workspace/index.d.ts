@@ -1,10 +1,6 @@
-declare namespace Workspace {
-
-}
-
 type PathName = 'root' | string;
 
-interface Workspace {
+export class Workspace {
 	/**
 	 * Current root path, an absolute path.
 	 *
@@ -40,12 +36,12 @@ interface Workspace {
 	 * Getting a named path. On failure, an Error is thrown.
 	 * @param name The name of path.
 	 */
-	getPath(name: PathName);
+	getPath(name: PathName): string;
 
 	/**
 	 * Resolving a path by named path with a sub path.
 	 * @param name The name of path.
 	 * @param pathname A relative path after the path specify by the name.
 	 */
-	resolve(name: PathName, ...pathname: string[]);
+	resolve(name: PathName, ...pathname: string[]): string;
 }
