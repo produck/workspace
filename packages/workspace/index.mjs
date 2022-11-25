@@ -23,7 +23,7 @@ class Workspace {
 	}
 
 	set root(pathname) {
-		this.#map.root = path.resolve(pathname);
+		this.setPath('root', pathname);
 	}
 
 	get root() {

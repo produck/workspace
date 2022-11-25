@@ -11,6 +11,15 @@ describe('Workspace::', function () {
 	this.beforeEach(() => fs.ensureDirSync(TEST_PATH));
 	this.afterEach(() => fs.removeSync(TEST_PATH));
 
+	describe('root', function () {
+		it('should return absolute path', async function () {
+			const workspace = new Workspace();
+
+			workspace.root = 'root';
+			assert.ok(path.isAbsolute(workspace.getPath('root')));
+		});
+	});
+
 	describe('buildRoot()', function () {
 		it('should create root folder', async function () {
 			const workspace = new Workspace();
