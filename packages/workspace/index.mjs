@@ -1,10 +1,28 @@
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 
-const DEFAULT_OPTIONS = { recursive: true };
+const MKDIR_OPTIONS = { recursive: true };
+
+const assertName = any => {
+	if (typeof any !== 'string') {
+		throw new TypeError('Invalid "name", one "string" expected.');
+	}
+};
+
+const validatePathSection = (section, index) => {
+	if (typeof section !== 'string') {
+		throw new TypeError(`Invalid "pathname[${index}]", one "string" expected.`);
+	}
+};
+
+const assertPathname = any => any.forEach(validatePathSection);
 
 class Workspace {
 	#map = { root: path.resolve() };
+
+	get root() {
+		return this.#map.root;
+	}
 
 	async buildAll() {
 		await this.buildRoot();
@@ -15,36 +33,42 @@ class Workspace {
 	}
 
 	async buildRoot() {
-		await fs.mkdir(this.root, DEFAULT_OPTIONS);
+		await fs.mkdir(this.root, MKDIR_OPTIONS);
 	}
 
 	async build(name, ...pathname) {
-		await fs.mkdir(this.resolve(name, ...pathname), DEFAULT_OPTIONS);
-	}
-
-	set root(pathname) {
-		this.setPath('root', pathname);
-	}
-
-	get root() {
-		return this.#map.root;
+		assertName(name);
+		assertPathname(pathname);
+		await fs.mkdir(this.resolve(name, ...pathname), MKDIR_OPTIONS);
 	}
 
 	setPath(name, ...pathname) {
-		this.#map[name] = path.join(this.root, ...pathname);
+		assertName(name);
+		assertPathname(pathname);
+
+		if (name === 'root') {
+			pathname.unshift(this.root);
+		}
+
+		this.#map[name] = path.join(...pathname);
 	}
 
 	getPath(name) {
+		assertName(name);
+
 		const pathname = this.#map[name];
 
-		if (!pathname) {
+		if (pathname === undefined) {
 			throw new Error(`The path named ${name} is NOT existed.`);
 		}
 
-		return pathname;
+		return path.join(this.root, pathname);
 	}
 
 	resolve(name, ...pathname) {
+		assertName(name);
+		assertPathname(pathname);
+
 		return path.join(this.getPath(name), ...pathname);
 	}
 }

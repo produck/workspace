@@ -3,9 +3,8 @@ type PathName = 'root' | string;
 declare class Workspace {
 	/**
 	 * Current root path, an absolute path.
-	 *
 	 */
-	root: string;
+	readonly root: string;
 
 	/**
 	 * `Workspace.buildRoot()` & all `Workspace.build()`.
