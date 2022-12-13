@@ -25,8 +25,6 @@ class Workspace {
 	}
 
 	async buildAll() {
-		await this.buildRoot();
-
 		for (const name in this.#map) {
 			await this.build(name);
 		}
@@ -62,7 +60,7 @@ class Workspace {
 			throw new Error(`The path named ${name} is NOT existed.`);
 		}
 
-		return path.join(this.root, pathname);
+		return path.resolve(this.root, pathname);
 	}
 
 	resolve(name, ...pathname) {
