@@ -44,11 +44,9 @@ class Workspace {
 		assertName(name);
 		assertPathname(pathname);
 
-		if (name === 'root') {
-			pathname.unshift(this.root);
-		}
-
-		this.#map[name] = path.join(...pathname);
+		this.#map[name] = name === 'root'
+			? path.resolve(this.root, ...pathname)
+			: path.join(...pathname);
 	}
 
 	getPath(name) {

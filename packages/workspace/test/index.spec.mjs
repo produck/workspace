@@ -18,6 +18,13 @@ describe('Workspace::', function () {
 			workspace.setPath('root', TEST_PATH);
 			assert.ok(path.isAbsolute(workspace.getPath('root')));
 		});
+
+		it('should set a correct root path.', function () {
+			const workspace = new Workspace();
+
+			workspace.setPath('root', process.cwd());
+			assert.equal(workspace.root, process.cwd());
+		});
 	});
 
 	describe('buildRoot()', function () {
