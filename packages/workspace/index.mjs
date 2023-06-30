@@ -67,6 +67,18 @@ class Workspace {
 
 		return path.join(this.getPath(name), ...pathname);
 	}
+
+	*names() {
+		for (const name in this.#map) {
+			yield name;
+		}
+	}
+
+	*entries() {
+		for (const name in this.#map) {
+			yield [name, this.getPath(name)];
+		}
+	}
 }
 
 export default Workspace;

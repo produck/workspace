@@ -176,4 +176,43 @@ describe('Workspace::', function () {
 			});
 		});
 	});
+
+	describe('names()', function () {
+		it('should return names iterator', function () {
+			assert.equal(typeof Workspace.prototype.names, 'function');
+
+			const workspace = new Workspace();
+
+			workspace.setPath('a', 'a');
+			workspace.setPath('b', 'b');
+			workspace.setPath('c', 'c');
+
+			const expected = ['root', 'a', 'b', 'c'];
+
+			Array.from(workspace.names()).forEach(i => assert.ok(expected.includes(i)));
+		});
+	});
+
+	describe('entries()', function () {
+		it('should return entries iterator', function () {
+			assert.equal(typeof Workspace.prototype.entries, 'function');
+
+			const workspace = new Workspace();
+
+			workspace.setPath('a', 'a');
+			workspace.setPath('b', 'b');
+			workspace.setPath('c', 'c');
+
+			const expected = [
+				['root', workspace.getPath('root')],
+				['a', workspace.getPath('a')],
+				['b', workspace.getPath('b')],
+				['c', workspace.getPath('c')]
+			];
+
+			for (const entry of Array.from(workspace.entries())) {
+				assert.ok(expected.some(i => i[0] === entry[0] && i[1] === entry[1]));
+			}
+		});
+	});
 });
