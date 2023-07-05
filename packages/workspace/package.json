@@ -1,6 +1,6 @@
 {
 	"name": "@produck/workspace",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"description": "Workspace directory pathname management.",
 	"author": "zhangtianyu <zhangtianyu@3dnest.cn>",
 	"homepage": "https://github.com/produck/workspace#readme",
