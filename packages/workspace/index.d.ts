@@ -43,6 +43,16 @@ declare class Workspace {
 	 * @param pathname A relative path after the path specify by the name.
 	 */
 	resolve(name: PathName, ...pathname: string[]): string;
+
+	/**
+	 * Return an iterator of all path names.
+	 */
+	names(): Generator<PathName, void, unknown>;
+
+	/**
+	 * Return an iterator of all path names and path values.
+	 */
+	entires(): Generator<[PathName, string], void, unknown>;
 }
 
 export default Workspace;
