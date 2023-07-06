@@ -3,21 +3,18 @@
 	"private": true,
 	"description": "",
 	"scripts": {
-		"deps:install": "npm install && lerna bootstrap",
-		"deps:clean": "lerna clean -y",
+		"deps:install": "npm -v && npm install",
 		"lint": "eslint --fix packages/**/*.mjs",
-		"test": "mocha \"packages/**/*.spec.mjs\" --no-diff -t 999999999 ",
+		"test": "lerna run test",
 		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
 		"publish": "npm run lint && npm run test && lerna publish"
 	},
 	"devDependencies": {
-		"c8": "^7.12.0",
-		"eslint": "^8.29.0",
-		"fs-extra": "^11.1.0",
-		"lerna": "^6.1.0",
-		"mocha": "^10.2.0"
+		"c8": "^8.0.0",
+		"eslint": "^8.44.0",
+		"lerna": "^7.1.1"
 	},
 	"workspaces": [
-		"packages/*"
+		"packages/workspace"
 	]
 }

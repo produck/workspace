@@ -15,6 +15,7 @@
 	},
 	"scripts": {
 		"build": "rollup -c script/rollup.config.mjs",
+		"test": "mocha \"**/*.spec.mjs\" --no-diff -t 999999999 ",
 		"prepublishOnly": "npm run build"
 	},
 	"files": [
@@ -24,7 +25,9 @@
 		"tsconfig.json"
 	],
 	"devDependencies": {
-		"rollup": "^3.7.4"
+		"fs-extra": "^11.1.1",
+		"mocha": "^10.2.0",
+		"rollup": "^3.26.1"
 	},
 	"exports": {
 		"import": "./index.mjs",

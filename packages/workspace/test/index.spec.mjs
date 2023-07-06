@@ -1,10 +1,9 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
-import Workspace from '../index.mjs';
-import { createRequire } from 'node:module';
+import fs from 'fs-extra';
 
-const require = createRequire(import.meta.url);
-const fs = require('fs-extra');
+import Workspace from '../index.mjs';
+
 const TEST_PATH = '.test';
 
 describe('Workspace::', function () {
