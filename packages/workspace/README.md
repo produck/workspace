@@ -54,23 +54,23 @@ Build folder.
 workspace.buildRoot();
 /**
  * /home/user/example
- * 		|__.test
+ *     └──.test
 */
 // OR
 workspace.build('log', '2023', '0710');
 /**
  * /home/user/example
- * 		|__.test
- * 			|__log
- * 				|__2023
- * 		 			|__0710
+ *    └──.test
+ *        └──log
+ *            └──2023
+ *                └──0710
 */
 // OR
 workspace.buildAll();
 /**
  * /home/user/example
- * 		|__.test
- * 	 		|__log
+ *    └──.test
+ *        └──log
  *
 */
 ```
