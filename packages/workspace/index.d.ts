@@ -1,6 +1,6 @@
 type PathName = 'root' | string;
 
-declare class Workspace {
+export class Workspace {
 	/**
 	 * Current root path, an absolute path.
 	 */
@@ -54,5 +54,3 @@ declare class Workspace {
 	 */
 	entires(): Generator<[PathName, string], void, unknown>;
 }
-
-export default Workspace;

@@ -17,7 +17,7 @@ const validatePathSection = (section, index) => {
 
 const assertPathname = any => any.forEach(validatePathSection);
 
-class Workspace {
+export class Workspace {
 	#map = { root: path.resolve() };
 
 	get root() {
@@ -80,5 +80,3 @@ class Workspace {
 		}
 	}
 }
-
-export default Workspace;

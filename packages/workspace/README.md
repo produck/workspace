@@ -27,7 +27,7 @@ Define path alias and get resolved path.
 `names`: Return generator for registered path alias.\
 `entries`: Return generator for registered path.
 ```js
-import Workspace from '@produck/workspace';
+import { Workspace } from '@produck/workspace';
 
 const workspace = new Workspace();
 
@@ -81,12 +81,14 @@ workspace.buildAll();
 
 As esModule,
 ```js
-import Workspace from '@produck/workspace';
+import { Workspace } from '@produck/workspace';
 
 const workspace = new Workspace();
 ```
 
 As CommonJS,
 ```js
-const Workspace = require('@produck/workspace');
+const { Workspace } = require('@produck/workspace');
+
+const workspace = new Workspace();
 ```

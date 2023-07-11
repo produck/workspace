@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import path from 'node:path';
 import fs from 'fs-extra';
 
-import Workspace from '../index.mjs';
+import { Workspace } from '../index.mjs';
 
 const TEST_PATH = '.test';
 
