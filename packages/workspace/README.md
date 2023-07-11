@@ -1,3 +1,5 @@
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/produck/workspace/node.yml)
+[![Coveralls](https://img.shields.io/coveralls/github/produck/workspace)](https://coveralls.io/github/produck/workspace)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 ![npm (scoped)](https://img.shields.io/npm/v/%40produck/workspace)
 ![NPM](https://img.shields.io/npm/l/%40produck%2Fworkspace)
@@ -20,10 +22,10 @@ process.cwd(); // /home/user/example
 Define path alias and get resolved path.
 
 `setPath`: Define alias for path.\
-`getPath`: Get path by path alias.\
-`resolve`: Get resolved path by path alias and passed path name.\
-`names`: Get generator for registered path alias.\
-`entries`: Get generator for registered path.
+`getPath`: Return path by path alias.\
+`resolve`: Return resolved path by path alias and passed path name.\
+`names`: Return generator for registered path alias.\
+`entries`: Return generator for registered path.
 ```js
 import Workspace from '@produck/workspace';
 
