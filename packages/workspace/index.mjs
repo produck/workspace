@@ -1,17 +1,18 @@
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
+import * as Ow from '@produck/ow';
 
 const MKDIR_OPTIONS = { recursive: true };
 
 const assertName = any => {
 	if (typeof any !== 'string') {
-		throw new TypeError('Invalid "name", one "string" expected.');
+		return Ow.Invalid('name', 'string');
 	}
 };
 
 const validatePathSection = (section, index) => {
 	if (typeof section !== 'string') {
-		throw new TypeError(`Invalid "pathname[${index}]", one "string" expected.`);
+		return Ow.Invalid(`pathname[${index}]`, 'string');
 	}
 };
 
@@ -55,7 +56,7 @@ class Workspace {
 		const pathname = this.#map[name];
 
 		if (pathname === undefined) {
-			throw new Error(`The path named ${name} is NOT existed.`);
+			return Ow.Error.Common(`The path named ${name} is NOT existed.`);
 		}
 
 		return path.resolve(this.root, pathname);

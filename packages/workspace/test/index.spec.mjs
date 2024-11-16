@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import path from 'node:path';
+
+import { describe, it } from 'mocha';
 import fs from 'fs-extra';
 
 import Workspace from '../index.mjs';
@@ -61,7 +63,7 @@ describe('Workspace::', function () {
 
 			assert.equal(
 				workspace.getPath('tmp'),
-				path.resolve('.test/.tmp/a/b/c/d')
+				path.resolve('.test/.tmp/a/b/c/d'),
 			);
 		});
 
@@ -70,7 +72,7 @@ describe('Workspace::', function () {
 
 			assert.throws(() => workspace.setPath(1), {
 				name: 'TypeError',
-				message: 'Invalid "name", one "string" expected.'
+				message: 'Invalid "name", one "string" expected.',
 			});
 		});
 
@@ -79,7 +81,7 @@ describe('Workspace::', function () {
 
 			assert.throws(() => workspace.setPath('a', '1', null), {
 				name: 'TypeError',
-				message: 'Invalid "pathname[1]", one "string" expected.'
+				message: 'Invalid "pathname[1]", one "string" expected.',
 			});
 		});
 	});
@@ -99,7 +101,7 @@ describe('Workspace::', function () {
 			workspace.setPath('t1', 't1');
 
 			assert.throws(() => workspace.getPath('t0'), {
-				message: 'The path named t0 is NOT existed.'
+				message: 'The path named t0 is NOT existed.',
 			});
 		});
 
@@ -108,7 +110,7 @@ describe('Workspace::', function () {
 
 			assert.throws(() => workspace.getPath(1), {
 				name: 'TypeError',
-				message: 'Invalid "name", one "string" expected.'
+				message: 'Invalid "name", one "string" expected.',
 			});
 		});
 	});
@@ -131,7 +133,7 @@ describe('Workspace::', function () {
 
 			assert.rejects(() => workspace.build(1), {
 				name: 'TypeError',
-				message: 'Invalid "name", one "string" expected.'
+				message: 'Invalid "name", one "string" expected.',
 			});
 		});
 
@@ -140,7 +142,7 @@ describe('Workspace::', function () {
 
 			assert.rejects(() => workspace.build('a', '1', null), {
 				name: 'TypeError',
-				message: 'Invalid "pathname[1]", one "string" expected.'
+				message: 'Invalid "pathname[1]", one "string" expected.',
 			});
 		});
 	});
@@ -153,7 +155,7 @@ describe('Workspace::', function () {
 
 			assert.equal(
 				workspace.resolve('resolve', 'a', 's', 'd', 'f', 'g'),
-				path.resolve('resolve', 'a/s/d/f/g')
+				path.resolve('resolve', 'a/s/d/f/g'),
 			);
 		});
 
@@ -162,7 +164,7 @@ describe('Workspace::', function () {
 
 			assert.throws(() => workspace.resolve(1), {
 				name: 'TypeError',
-				message: 'Invalid "name", one "string" expected.'
+				message: 'Invalid "name", one "string" expected.',
 			});
 		});
 
@@ -171,7 +173,7 @@ describe('Workspace::', function () {
 
 			assert.throws(() => workspace.resolve('a', '1', null), {
 				name: 'TypeError',
-				message: 'Invalid "pathname[1]", one "string" expected.'
+				message: 'Invalid "pathname[1]", one "string" expected.',
 			});
 		});
 	});
@@ -206,7 +208,7 @@ describe('Workspace::', function () {
 				['root', workspace.getPath('root')],
 				['a', workspace.getPath('a')],
 				['b', workspace.getPath('b')],
-				['c', workspace.getPath('c')]
+				['c', workspace.getPath('c')],
 			];
 
 			for (const entry of Array.from(workspace.entries())) {

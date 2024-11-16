@@ -8,6 +8,8 @@
 	"publishConfig": {
 		"access": "public"
 	},
+	"type": "module",
+	"types": "./index.d.ts",
 	"main": "index.js",
 	"repository": {
 		"type": "git",
@@ -25,12 +27,16 @@
 		"tsconfig.json"
 	],
 	"devDependencies": {
-		"fs-extra": "^11.1.1",
-		"mocha": "^10.2.0",
-		"rollup": "^3.26.1"
+		"fs-extra": "^11.2.0",
+		"mocha": "^10.8.2",
+		"rollup": "^4.27.2"
 	},
 	"exports": {
+		"types": "./index.d.ts",
 		"import": "./index.mjs",
 		"require": "./index.cjs"
+	},
+	"dependencies": {
+		"@produck/ow": "^0.1.2"
 	}
 }
