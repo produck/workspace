@@ -1,22 +1,15 @@
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import * as Ow from '@produck/ow';
+import { Assert } from '@produck/idiom';
 
 const MKDIR_OPTIONS = { recursive: true };
 
-const assertName = any => {
-	if (typeof any !== 'string') {
-		return Ow.Invalid('name', 'string');
-	}
-};
+const assertName = any => Assert.Type.String(any, 'name');
 
-const validatePathSection = (section, index) => {
-	if (typeof section !== 'string') {
-		return Ow.Invalid(`pathname[${index}]`, 'string');
-	}
-};
-
-const assertPathname = any => any.forEach(validatePathSection);
+const assertPathname = any => any.forEach((section, index) => {
+	Assert.Type.String(section, `pathname[${index}]`);
+});
 
 class Workspace {
 	#map = { root: path.resolve() };

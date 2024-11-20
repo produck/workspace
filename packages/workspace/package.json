@@ -26,17 +26,13 @@
 		"index.cjs",
 		"tsconfig.json"
 	],
-	"devDependencies": {
-		"fs-extra": "^11.2.0",
-		"mocha": "^10.8.2",
-		"rollup": "^4.27.2"
-	},
 	"exports": {
 		"types": "./index.d.ts",
 		"import": "./index.mjs",
 		"require": "./index.cjs"
 	},
 	"dependencies": {
+		"@produck/idiom": "^0.3.2",
 		"@produck/ow": "^0.1.2"
 	}
 }
