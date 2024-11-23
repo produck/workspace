@@ -5,47 +5,14 @@ import { Assert } from '@produck/idiom';
 
 const MKDIR_OPTIONS = { recursive: true };
 
-const assertName = any => Assert.Type.String(any, 'name');
-
-const assertPathname = any => any.forEach((section, index) => {
-	Assert.Type.String(section, `pathname[${index}]`);
-});
-
-class Workspace {
+export default class Workspace {
 	#map = { root: path.resolve() };
 
-	get root() {
-		return this.#map.root;
+	#resolve(name, ...pathnames) {
+		return path.join(this.#getPath(name), ...pathnames);
 	}
 
-	async buildAll() {
-		for (const name in this.#map) {
-			await this.build(name);
-		}
-	}
-
-	async buildRoot() {
-		await fs.mkdir(this.root, MKDIR_OPTIONS);
-	}
-
-	async build(name, ...pathname) {
-		assertName(name);
-		assertPathname(pathname);
-		await fs.mkdir(this.resolve(name, ...pathname), MKDIR_OPTIONS);
-	}
-
-	setPath(name, ...pathname) {
-		assertName(name);
-		assertPathname(pathname);
-
-		this.#map[name] = name === 'root'
-			? path.resolve(this.root, ...pathname)
-			: path.join(...pathname);
-	}
-
-	getPath(name) {
-		assertName(name);
-
+	#getPath(name) {
 		const pathname = this.#map[name];
 
 		if (pathname === undefined) {
@@ -55,11 +22,40 @@ class Workspace {
 		return path.resolve(this.root, pathname);
 	}
 
-	resolve(name, ...pathname) {
-		assertName(name);
-		assertPathname(pathname);
+	async #build(name, ...pathnames) {
+		await fs.mkdir(this.#resolve(name, ...pathnames), MKDIR_OPTIONS);
+	}
 
-		return path.join(this.getPath(name), ...pathname);
+	get root() {
+		return this.#map.root;
+	}
+
+	async buildAll() {
+		for (const name in this.#map) {
+			await this.#build(name);
+		}
+	}
+
+	build(...args) {
+		return this.#build(...args);
+	}
+
+	async buildRoot() {
+		await fs.mkdir(this.root, MKDIR_OPTIONS);
+	}
+
+	setPath(name, ...pathnames) {
+		this.#map[name] = name === 'root'
+			? path.resolve(this.root, ...pathnames)
+			: path.join(...pathnames);
+	}
+
+	resolve(...args) {
+		return this.#resolve(...args);
+	}
+
+	getPath(...args) {
+		return this.#getPath(...args);
 	}
 
 	*names() {
@@ -70,9 +66,31 @@ class Workspace {
 
 	*entries() {
 		for (const name in this.#map) {
-			yield [name, this.getPath(name)];
+			yield [name, this.#getPath(name)];
 		}
 	}
 }
 
-export default Workspace;
+for (const name of ['build', 'setPath', 'resolve']) {
+	const _fn = Workspace.prototype[name];
+
+	function assertEachPathname (section, index) {
+		Assert.Type.String(section, `pathname[${index}]`);
+	}
+
+	Workspace.prototype[name] = { [name]: function (name, ...pathnames) {
+		pathnames.forEach(assertEachPathname);
+
+		return _fn.call(this, name, ...pathnames);
+	} }[name];
+}
+
+for (const name of ['build', 'setPath', 'getPath', 'resolve']) {
+	const _fn = Workspace.prototype[name];
+
+	Workspace.prototype[name] = { [name]: function (name, ...args) {
+		Assert.Type.String(name, 'name');
+
+		return _fn.call(this, name, ...args);
+	} }[name];
+}

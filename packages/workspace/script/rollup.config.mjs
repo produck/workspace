@@ -2,7 +2,6 @@ import { builtinModules, createRequire } from 'node:module';
 import path from 'node:path';
 
 import { defineConfig } from 'rollup';
-import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 const require = createRequire(import.meta.url);
 const meta = require('../package.json');
@@ -24,9 +23,6 @@ const moduleList = [
 
 export default moduleList.map(config => {
 	return defineConfig({
-		plugins: [
-			nodeResolve({ preferBuiltins: true }),
-		],
 		input: path.resolve('index.mjs'),
 		output: {
 			file: config.output,
@@ -35,6 +31,7 @@ export default moduleList.map(config => {
 			banner: BANNER,
 		},
 		external: [
+			...Object.keys(meta.dependencies),
 			...builtinModules,
 			...builtinModules.map(name => `node:${name}`),
 		],

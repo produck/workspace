@@ -1,6 +1,6 @@
 type PathName = 'root' | string;
 
-declare class Workspace {
+export default class Workspace {
 	/**
 	 * Current root path, an absolute path.
 	 */
@@ -19,17 +19,17 @@ declare class Workspace {
 	/**
 	 * Build a specific name path in fs.
 	 * @param name The name of path.
-	 * @param pathname A relative path after the path specify by the name.
+	 * @param pathnames A relative path after the path specify by the name.
 	 */
-	build(name: PathName, ...pathname: string[]): Promise<void>;
+	build(name: PathName, ...pathnames: string[]): Promise<void>;
 
 	/**
 	 * Setting a named path. Overrides the path to a special directory or
 	 * file associated with name.
 	 * @param name The name of path.
-	 * @param pathname A relative path after the path specify by the name.
+	 * @param pathnames A relative path after the path specify by the name.
 	 */
-	setPath(name: PathName, ...pathname: string[]): void;
+	setPath(name: PathName, ...pathnames: string[]): void;
 
 	/**
 	 * Getting a named path. On failure, an Error is thrown.
@@ -40,9 +40,9 @@ declare class Workspace {
 	/**
 	 * Resolving a path by named path with a sub path.
 	 * @param name The name of path.
-	 * @param pathname A relative path after the path specify by the name.
+	 * @param pathnames A relative path after the path specify by the name.
 	 */
-	resolve(name: PathName, ...pathname: string[]): string;
+	resolve(name: PathName, ...pathnames: string[]): string;
 
 	/**
 	 * Return an iterator of all path names.
@@ -54,5 +54,3 @@ declare class Workspace {
 	 */
 	entires(): Generator<[PathName, string], void, unknown>;
 }
-
-export default Workspace;
