@@ -5,8 +5,8 @@
 	"scripts": {
 		"deps:install": "npm -v && npm install",
 		"lint": "eslint --fix packages/**/*.mjs",
-		"test": "lerna run test",
-		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm run test",
+		"test": "npm test --workspaces",
+		"coverage": "c8 --exclude=**/*.spec.mjs --reporter=lcov npm test",
 		"publish": "npm run lint && npm run test && lerna publish"
 	},
 	"devDependencies": {
