@@ -1,16 +1,21 @@
+import * as fs from 'node:fs';
 import assert from 'node:assert/strict';
 import path from 'node:path';
 
 import { describe, it } from 'mocha';
-import fs from 'fs-extra';
 
 import Workspace from '../index.mjs';
 
 const TEST_PATH = '.test';
 
 describe('Workspace::', function () {
-	this.beforeEach(() => fs.ensureDirSync(TEST_PATH));
-	this.afterEach(() => fs.removeSync(TEST_PATH));
+	this.beforeEach(async function reset() {
+		if (fs.existsSync(TEST_PATH)) {
+			await fs.promises.rm(TEST_PATH, { recursive: true });
+		}
+
+		await fs.promises.mkdir(TEST_PATH);
+	});
 
 	describe('root', function () {
 		it('should return absolute path', async function () {
