@@ -52,5 +52,5 @@ export default class Workspace {
 	/**
 	 * Return an iterator of all path names and path values.
 	 */
-	entires(): Generator<[PathName, string], void, unknown>;
+	entries(): Generator<[PathName, string], void, unknown>;
 }
